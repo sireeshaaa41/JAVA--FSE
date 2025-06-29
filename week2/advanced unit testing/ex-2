@@ -1,0 +1,79 @@
+Creating a Test Suite
+ 1. Create Two Test Classes
+
+src/test/java/com/example/MathUtilsTest.java
+package com.example;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class MathUtilsTest {
+
+    MathUtils mathUtils = new MathUtils();
+
+    @Test
+    public void testAdd() {
+        assertEquals(5, mathUtils.add(2, 3));
+    }
+
+    @Test
+    public void testMultiply() {
+        assertEquals(6, mathUtils.multiply(2, 3));
+    }
+}
+
+src/test/java/com/example/EvenCheckerTest.java
+package com.example;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class EvenCheckerTest {
+
+    EvenChecker evenChecker = new EvenChecker();
+
+    @ParameterizedTest
+    @ValueSource(ints = {2, 4, 6})
+    public void testEven(int number) {
+        assertTrue(evenChecker.isEven(number));
+    }
+}
+
+
+2. Create a Test Suite Class
+src/test/java/com/example/AllTests.java
+
+package com.example;
+
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@SelectClasses({
+    MathUtilsTest.class,
+    EvenCheckerTest.class
+})
+public class AllTests {
+   }
+
+
+xml
+
+<dependencies>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+
+ 
+ Output When You Run the Suite
+Running AllTests...
+
+ MathUtilsTest.testAdd passed
+ MathUtilsTest.testMultiply passed
+EvenCheckerTest.testEven (with 3 values) passed
+
+Result: All tests passed 
