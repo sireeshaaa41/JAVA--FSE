@@ -1,0 +1,50 @@
+Parameterized Testing-java
+
+src/main/java/com/example/EvenChecker.java
+package com.example;
+
+public class EvenChecker {
+    public boolean isEven(int number) {
+        return number % 2 == 0;
+    }
+}
+ src/test/java/com/example/EvenCheckerTest.java
+package com.example;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class EvenCheckerTest {
+
+    EvenChecker evenChecker = new EvenChecker();
+
+    @ParameterizedTest
+    @ValueSource(ints = {2, 4, 6, 8, 10, 100})
+    public void testIsEvenWithEvenNumbers(int number) {
+        assertTrue(evenChecker.isEven(number), number + " should be even");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 5, 7, 9, 11})
+    public void testIsEvenWithOddNumbers(int number) {
+        assertFalse(evenChecker.isEven(number), number + " should be odd");
+    }
+}
+Required Dependencies (in pom.xml for Maven)
+xml
+<dependencies>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+
+
+Expected Output When Tests Run
+All tests pass
+ testIsEvenWithEvenNumbers (6 inputs tested)
+testIsEvenWithOddNumbers (6 inputs tested)
