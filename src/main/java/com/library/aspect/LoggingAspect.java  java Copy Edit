@@ -1,0 +1,21 @@
+package com.library.aspect;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+
+@Aspect
+public class LoggingAspect {
+
+    @Around("execution(* com.library.service.*.*(..))")
+    public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+
+        Object result = joinPoint.proceed();  // Call actual method
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Executed " + joinPoint.getSignature() +
+                           " in " + (endTime - startTime) + "ms");
+
+        return result;
+    }
+}
