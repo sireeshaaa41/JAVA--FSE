@@ -1,0 +1,68 @@
+src/main/java/com/example/MathUtils.java
+package com.example;
+
+public class MathUtils {
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Division by zero is not allowed.");
+        }
+        return a / b;
+    }
+}
+
+ src/test/java/com/example/MathUtilsTest.java
+package com.example;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class MathUtilsTest {
+
+    MathUtils mathUtils = new MathUtils();
+
+    @Test
+    public void testAdd() {
+        assertEquals(5, mathUtils.add(2, 3));
+    }
+
+    @Test
+    public void testSubtract() {
+        assertEquals(1, mathUtils.subtract(4, 3));
+    }
+
+    @Test
+    public void testMultiply() {
+        assertEquals(6, mathUtils.multiply(2, 3));
+    }
+
+    @Test
+    public void testDivide() {
+        assertEquals(2, mathUtils.divide(6, 3));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDivideByZero() {
+        mathUtils.divide(10, 0);
+    }
+}
+
+Output When You Run the Tests
+
+All tests pass 
+
+ testAdd passed
+ testSubtract passed
+ testMultiply passed
+ testDivide passed
+ testDivideByZero passed (exception expected)
