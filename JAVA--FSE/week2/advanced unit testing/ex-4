@@ -1,0 +1,60 @@
+Exception Testing
+
+src/main/java/com/example/ExceptionThrower.java
+package com.example;
+
+public class ExceptionThrower {
+
+    public void throwException(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("Input must not be null or empty.");
+        }
+        // Otherwise, do something (here just a print for demonstration)
+        System.out.println("Valid input: " + input);
+    }
+}
+
+src/test/java/com/example/ExceptionThrowerTest.java
+package com.example;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+public class ExceptionThrowerTest {
+
+    ExceptionThrower exceptionThrower = new ExceptionThrower();
+
+    @Test
+    public void testThrowExceptionWithNull() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            exceptionThrower.throwException(null);
+        });
+
+        assertEquals("Input must not be null or empty.", exception.getMessage());
+    }
+
+    @Test
+    public void testThrowExceptionWithEmptyString() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            exceptionThrower.throwException("");
+        });
+
+        assertEquals("Input must not be null or empty.", exception.getMessage());
+    }
+
+    @Test
+    public void testThrowExceptionWithValidInput() {
+        assertDoesNotThrow(() -> exceptionThrower.throwException("Hello"));
+    }
+}
+
+xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
+    <scope>test</scope>
+</dependency>
+
+ Output When You Run the Tests
+ testThrowExceptionWithNull passed (exception caught)
+ testThrowExceptionWithEmptyString passed (exception caught)
+ testThrowExceptionWithValidInput passed (no exception)

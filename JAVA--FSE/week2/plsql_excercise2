@@ -1,0 +1,95 @@
+Scenario 1: SafeTransferFunds
+CREATE OR REPLACE PROCEDURE SafeTransferFunds(
+    from_account_id IN NUMBER,
+    to_account_id IN NUMBER,
+    amount IN NUMBER
+)
+IS
+    insufficient_funds EXCEPTION;
+    current_balance NUMBER;
+BEGIN
+    -- Get current balance of sender
+    SELECT balance INTO current_balance FROM accounts WHERE account_id = from_account_id;
+
+    -- Check for sufficient funds
+    IF current_balance < amount THEN
+        RAISE insufficient_funds;
+    END IF;
+
+    -- Deduct amount from sender
+    UPDATE accounts
+    SET balance = balance - amount
+    WHERE account_id = from_account_id;
+
+    -- Add amount to receiver
+    UPDATE accounts
+    SET balance = balance + amount
+    WHERE account_id = to_account_id;
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Funds transferred successfully.');
+    
+EXCEPTION
+    WHEN insufficient_funds THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error: Insufficient funds in account ' || from_account_id);
+
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Unexpected error during fund transfer: ' || SQLERRM);
+END;
+
+
+
+
+Scenario 2: UpdateSalary
+CREATE OR REPLACE PROCEDURE UpdateSalary(
+    p_emp_id IN NUMBER,
+    p_percentage IN NUMBER
+)
+IS
+BEGIN
+    -- Try to update salary
+    UPDATE employees
+    SET salary = salary + (salary * p_percentage / 100)
+    WHERE emp_id = p_emp_id;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Employee ID not found: ' || p_emp_id);
+    END IF;
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Salary updated successfully for Employee ID: ' || p_emp_id);
+    
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error updating salary: ' || SQLERRM);
+END;
+
+
+Scenario 3: AddNewCustomer
+
+CREATE OR REPLACE PROCEDURE AddNewCustomer(
+    p_customer_id IN NUMBER,
+    p_name IN VARCHAR2,
+    p_age IN NUMBER
+)
+IS
+BEGIN
+    -- Insert new customer
+    INSERT INTO customers(customer_id, name, age)
+    VALUES (p_customer_id, p_name, p_age);
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Customer added successfully. ID: ' || p_customer_id);
+
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error: Customer ID ' || p_customer_id || ' already exists.');
+
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Unexpected error while adding customer: ' || SQLERRM);
+END;

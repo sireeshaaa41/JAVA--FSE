@@ -1,0 +1,48 @@
+Controlling Test Execution Order
+
+src/test/java/com/example/OrderedTests.java
+package com.example;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)  // Define custom order strategy
+public class OrderedTests {
+
+    @Test
+    @Order(1)
+    void testLogin() {
+        System.out.println("1 testLogin executed");
+        assertTrue(true);
+    }
+
+    @Test
+    @Order(2)
+    void testSearch() {
+        System.out.println("2  testSearch executed");
+        assertTrue(true);
+    }
+
+    @Test
+    @Order(3)
+    void testLogout() {
+        System.out.println("3️ testLogout executed");
+        assertTrue(true);
+    }
+}
+
+xml:
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
+    <scope>test</scope>
+</dependency>
+
+
+Expected Output When You Run Tests
+
+ testLogin executed
+ testSearch executed
+️testLogout executed
+
+Result: All tests passed

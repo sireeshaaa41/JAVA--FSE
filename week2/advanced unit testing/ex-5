@@ -1,0 +1,52 @@
+Timeout and Performance Testing
+
+
+src/main/java/com/example/PerformanceTester.java
+package com.example;
+public class PerformanceTester {
+  public void performTask() {
+        try {
+            // Simulate a task that takes ~300ms
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}
+
+src/test/java/com/example/PerformanceTesterTest.java
+package com.example;
+import org.junit.jupiter.api.Test;
+import java.time.Duration;
+import static org.junit.jupiter.api.Assertions.*;
+public class PerformanceTesterTest {
+ PerformanceTester tester = new PerformanceTester();
+
+    @Test
+    public void testPerformTaskCompletesInTime() {
+        assertTimeout(Duration.ofMillis(500), () -> {
+            tester.performTask();
+        }, "Task took too long!");
+    }
+
+    @Test
+    public void testPerformTaskFailsIfTooSlow() {
+        assertTimeout(Duration.ofMillis(100), () -> {
+            tester.performTask(); // This should fail if delay is >100ms
+        });
+    }
+}
+
+xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.0</version>
+    <scope>test</scope>
+</dependency>
+
+ 
+ Output
+If performTask() takes ~300ms:
+testPerformTaskCompletesInTime passed
+testPerformTaskFailsIfTooSlow failed (timeout exceeded)

@@ -1,0 +1,197 @@
+public class TaskManagementSystem {
+
+    // Task class representing individual tasks
+    static class Task {
+        private int taskId;
+        private String taskName;
+        private String status; // e.g., "Pending", "In Progress", "Completed"
+
+        public Task(int taskId, String taskName, String status) {
+            this.taskId = taskId;
+            this.taskName = taskName;
+            this.status = status;
+        }
+
+        // Getters
+        public int getTaskId() { return taskId; }
+        public String getTaskName() { return taskName; }
+        public String getStatus() { return status; }
+
+        @Override
+        public String toString() {
+            return String.format("Task ID: %-4d | Name: %-20s | Status: %-12s", 
+                    taskId, taskName, status);
+        }
+    }
+
+    // Node class for the linked list
+    static class TaskNode {
+        Task task;
+        TaskNode next;
+
+        public TaskNode(Task task) {
+            this.task = task;
+            this.next = null;
+        }
+    }
+
+    // TaskList class implementing singly linked list operations
+    static class TaskList {
+        private TaskNode head;
+        private int size;
+
+        public TaskList() {
+            head = null;
+            size = 0;
+        }
+
+        // Add task at the end - O(n)
+        public void addTask(Task task) {
+            TaskNode newNode = new TaskNode(task);
+            
+            if (head == null) {
+                head = newNode;
+            } else {
+                TaskNode current = head;
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newNode;
+            }
+            size++;
+        }
+
+        // Add task at the beginning - O(1)
+        public void addTaskAtHead(Task task) {
+            TaskNode newNode = new TaskNode(task);
+            newNode.next = head;
+            head = newNode;
+            size++;
+        }
+
+        // Search task by ID - O(n)
+        public Task searchTask(int taskId) {
+            TaskNode current = head;
+            while (current != null) {
+                if (current.task.getTaskId() == taskId) {
+                    return current.task;
+                }
+                current = current.next;
+            }
+            return null;
+        }
+
+        // Delete task by ID - O(n)
+        public boolean deleteTask(int taskId) {
+            if (head == null) return false;
+            
+            // Special case: deleting head
+            if (head.task.getTaskId() == taskId) {
+                head = head.next;
+                size--;
+                return true;
+            }
+            
+            TaskNode current = head;
+            while (current.next != null) {
+                if (current.next.task.getTaskId() == taskId) {
+                    current.next = current.next.next;
+                    size--;
+                    return true;
+                }
+                current = current.next;
+            }
+            return false;
+        }
+
+        // Traverse all tasks - O(n)
+        public void displayAllTasks() {
+            System.out.println("\nCurrent Tasks (" + size + "):");
+            TaskNode current = head;
+            while (current != null) {
+                System.out.println(current.task);
+                current = current.next;
+            }
+        }
+
+        public int getSize() {
+            return size;
+        }
+    }
+
+    public static void main(String[] args) {
+        TaskList taskList = new TaskList();
+
+        // Adding tasks
+        taskList.addTask(new Task(101, "Implement login feature", "In Progress"));
+        taskList.addTask(new Task(102, "Design database schema", "Completed"));
+        taskList.addTask(new Task(103, "Write unit tests", "Pending"));
+        taskList.addTaskAtHead(new Task(100, "Project setup", "Completed"));
+
+        // Display all tasks
+        taskList.displayAllTasks();
+
+        // Search operations
+        System.out.println("\nSearching for task 102:");
+        Task foundTask = taskList.searchTask(102);
+        System.out.println(foundTask != null ? foundTask : "Task not found");
+
+        System.out.println("\nSearching for non-existent task 999:");
+        Task notFoundTask = taskList.searchTask(999);
+        System.out.println(notFoundTask != null ? notFoundTask : "Task not found");
+
+        // Delete operations
+        System.out.println("\nDeleting task 102:");
+        boolean deleted = taskList.deleteTask(102);
+        System.out.println(deleted ? "Task deleted successfully" : "Task not found");
+        taskList.displayAllTasks();
+
+        System.out.println("\nAttempting to delete non-existent task 999:");
+        deleted = taskList.deleteTask(999);
+        System.out.println(deleted ? "Task deleted successfully" : "Task not found");
+
+        // Linked list explanation and analysis
+        System.out.println("\n--- Linked List Types and Analysis ---");
+        System.out.println("Types of Linked Lists:");
+        System.out.println("1. Singly Linked List:");
+        System.out.println("   - Each node has data and a pointer to the next node");
+        System.out.println("   - Can only traverse in one direction");
+        System.out.println("   - Less memory overhead than doubly linked list");
+        
+        System.out.println("\n2. Doubly Linked List:");
+        System.out.println("   - Each node has data and pointers to both next and previous nodes");
+        System.out.println("   - Can traverse in both directions");
+        System.out.println("   - Easier deletion of nodes but more memory overhead");
+        
+        System.out.println("\n3. Circular Linked List:");
+        System.out.println("   - Last node points back to the first node");
+        System.out.println("   - Can be singly or doubly linked");
+        System.out.println("   - Useful for circular buffers and round-robin scheduling");
+
+        System.out.println("\nTime Complexity Analysis:");
+        System.out.println("- Add at head: O(1)");
+        System.out.println("- Add at tail: O(n)");
+        System.out.println("- Search by ID: O(n)");
+        System.out.println("- Delete by ID: O(n)");
+        System.out.println("- Traverse all: O(n)");
+
+        System.out.println("\nAdvantages of Linked Lists over Arrays:");
+        System.out.println("1. Dynamic size - grows/shrinks as needed");
+        System.out.println("2. Efficient insertions/deletions - no shifting needed");
+        System.out.println("3. Memory efficiency - allocates exactly what's needed");
+        System.out.println("4. No wasted space - no pre-allocation required");
+        System.out.println("5. Flexible - can easily reorganize items by changing pointers");
+
+        System.out.println("\nWhen to Use Linked Lists:");
+        System.out.println("- When frequent insertions/deletions are needed");
+        System.out.println("- When the number of elements is unpredictable");
+        System.out.println("- When memory is fragmented (arrays need contiguous space)");
+        System.out.println("- When implementing stacks/queues where you only access ends");
+
+        System.out.println("\nWhen to Prefer Arrays:");
+        System.out.println("- When random access by index is frequent");
+        System.out.println("- When memory is tight (linked lists have pointer overhead)");
+        System.out.println("- When cache performance is critical (arrays have better locality)");
+        System.out.println("- When the size is known and fixed");
+    }
+}
