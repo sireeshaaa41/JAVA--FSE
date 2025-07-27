@@ -1,0 +1,42 @@
+/* Styles for the overall app container */
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Styles for the score card component */
+.score-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px auto; /* Centers the card horizontally */
+  max-width: 400px; /* Limits the width of the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.score-card h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.score-card p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 16px;
+}
+
+.score-card strong {
+  color: #000;
+}
+
+/* Style for the average score line */
+.average-score {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #007bff; /* A nice blue color */
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+}
