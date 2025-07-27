@@ -1,0 +1,35 @@
+1>React Components Explained
+In React, a component is a self-contained, reusable block of code that encapsulates a part of the user interface (UI). Think of them as custom, independent, and reusable building blocks for your UI. Each component has its own logic and appearance, making it easier to manage and maintain complex user interfaces.
+Components allow you to:
+Divide the UI into independent pieces: Instead of one large, unmanageable block of code, you break your UI into smaller, focused components (e.g., a Header component, a Sidebar component, a UserCard component).
+Encapsulate functionality: Each component can manage its own state and props, allowing it to behave independently
+Promote reusability: Once you create a component, you can use it multiple times throughout your application, saving development time and ensuring consistency.
+Improve readability and maintainability: Smaller, focused components are easier to understand, debug, and modify.
+
+2>Differences Between React Components and JavaScript Functions
+While React components (especially functional components) often look like JavaScript functions, there are key distinctions:
+
+3>Feature	JavaScript Function	React Component
+Purpose	General-purpose code execution.	Specifically designed to return React elements (UI).
+Return Value	Can return any data type (numbers, strings, objects, etc.).	Must return a React element (JSX) or null.
+Props	Takes arguments.	Receives a single object called props as its argument.
+State	No inherent concept of internal, reactive state.	Can manage internal, reactive state (especially with Hooks in functional components or this.state in class components).
+Lifecycle Methods	No inherent lifecycle.	Has a lifecycle (mounting, updating, unmounting) that can be managed (e.g., useEffect in functional, componentDidMount in class).
+Rendering	Doesn't directly render UI to the DOM.	React takes its return value (JSX) and renders it to the DOM.
+"this" Context	this context depends on how the function is called.	this context is well-defined in class components; not typically used in functional components.
+Syntax	Standard JavaScript function syntax.	JSX syntax is often used within the function's return.
+Export to Sheets
+Types of React Components
+Historically, React has had two primary types of components:
+Class Components
+Function Components
+With the introduction of React Hooks, Function Components have largely become the preferred way to write React components due to their simplicity and ability to manage state and side effects without classes. However, understanding class components is still important, especially when working with older codebases.
+Class Components Explained
+Class components are ES6 classes that extend React.Component. They were traditionally used when you needed to manage component state, handle lifecycle events, or provide more complex logic.
+
+  4>Key characteristics of Class Components:
+render() method: Must contain a render() method that returns JSX. This method is responsible for describing the component's UI.
+this.state: Components can have internal state, managed via this.state, which is a plain JavaScript object. State can be updated using this.setState().
+Lifecycle methods: Provide methods like componentDidMount(), componentDidUpdate(), componentWillUnmount(), etc., which allow you to run code at specific points in the component's lifecycle.
+props: Received as this.props.
+this binding: Often requires careful handling of this context, especially when passing methods as props.
