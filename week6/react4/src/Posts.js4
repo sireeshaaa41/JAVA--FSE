@@ -1,0 +1,47 @@
+import React from 'react';
+
+class Posts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      error: null,
+      isLoading: true
+    };
+  }
+
+  async loadPosts() {
+    // ... (as defined in step 6)
+  }
+
+  componentDidMount() {
+    // ... (as defined in step 7)
+  }
+
+  // Figure 6: render() method
+  render() {
+    const { posts, error, isLoading } = this.state;
+
+    if (isLoading) {
+      return <div>Loading posts...</div>;
+    }
+
+    if (error) {
+      return <div style={{ color: 'red' }}>Error: {error.message}</div>;
+    }
+
+    return (
+      <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>Blog Posts</h1>
+        {posts.map(post => (
+          <div key={post.id} style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '15px', marginBottom: '20px', backgroundColor: '#f9f9f9', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+            <h3 style={{ color: '#0056b3', marginBottom: '10px' }}>{post.title}</h3>
+            <p style={{ color: '#555', lineHeight: '1.6' }}>{post.body}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default Posts;
