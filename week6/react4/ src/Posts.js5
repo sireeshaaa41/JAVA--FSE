@@ -1,0 +1,64 @@
+import React from 'react';
+
+class Posts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      error: null,
+      isLoading: true,
+      hasError: false // New state to track if an error occurred in a child
+    };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  // Figure 7: componentDidCatch() hook
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    console.error("Error caught by componentDidCatch:", error, errorInfo);
+    alert("An error occurred in a component: " + error.toString());
+  }
+
+  async loadPosts() {
+    // ... (as defined in step 6)
+  }
+
+  componentDidMount() {
+    // ... (as defined in step 7)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1 style={{ color: 'red', textAlign: 'center', marginTop: '50px' }}>Something went wrong.</h1>;
+    }
+    // ... (rest of the render method as defined in step 8)
+    const { posts, error, isLoading } = this.state;
+
+    if (isLoading) {
+      return <div>Loading posts...</div>;
+    }
+
+    if (error) {
+      return <div style={{ color: 'red' }}>Error: {error.message}</div>;
+    }
+
+    return (
+      <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>Blog Posts</h1>
+        {posts.map(post => (
+          <div key={post.id} style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '15px', marginBottom: '20px', backgroundColor: '#f9f9f9', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+            <h3 style={{ color: '#0056b3', marginBottom: '10px' }}>{post.title}</h3>
+            <p style={{ color: '#555', lineHeight: '1.6' }}>{post.body}</p>
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default Posts;
