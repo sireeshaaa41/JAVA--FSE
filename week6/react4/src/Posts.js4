@@ -1,0 +1,29 @@
+import React from 'react';
+
+class Posts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      error: null,
+      isLoading: true
+    };
+  }
+
+  async loadPosts() {
+    // ... (as defined in step 6)
+  }
+
+  // Figure 5: componentDidMount() hook
+  componentDidMount() {
+    console.log("Posts component did mount. Fetching posts...");
+    this.loadPosts(); // Call loadPosts when the component mounts
+  }
+
+  // ... rest of the component methods will go here
+  render() {
+    // ...
+  }
+}
+
+export default Posts;
