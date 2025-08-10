@@ -1,0 +1,50 @@
+Branching
+
+# 1. Create a new branch called GitNewBranch
+git branch GitNewBranch
+
+# 2. List all local and remote branches
+git branch -a
+
+# 3. Switch to the new branch
+git checkout GitNewBranch
+
+# 4. Add a new file (example: newfile.txt) and put some content in it
+echo "This is my new branch content" > newfile.txt
+
+# 5. Stage the file
+git add newfile.txt
+
+# 6. Commit the changes
+git commit -m "Added newfile.txt in GitNewBranch"
+
+# 7. Check the branch status
+git status
+
+
+Merging
+# 1. Switch back to master branch
+git checkout master
+
+# 2. Show command-line differences between master and GitNewBranch
+git diff master GitNewBranch
+
+# 3. Show visual differences using P4Merge (if configured)
+git mergetool
+
+# 4. Merge GitNewBranch into master
+git merge GitNewBranch
+
+# 5. View merge history in a visual log
+git log --oneline --graph --decorate
+
+# 6. Delete the branch after merging
+git branch -d GitNewBranch
+
+# 7. Check status
+git status
+💡 Important:
+Before running these commands, first navigate into your repo’s folder in Git Bash:
+
+
+cd "C:/Users/byrapuram shireesha/git/gitlab-repo-name"
