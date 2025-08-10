@@ -1,0 +1,93 @@
+1. Understanding .gitignore
+The .gitignore file tells Git which files and folders to ignore in your repository.
+Ignored files will not be tracked, staged, or committed.
+This is useful for:
+Temporary files
+Logs
+Build artifacts
+IDE/project-specific files
+
+2. How .gitignore works
+You create a file named .gitignore in your repository root.
+Inside it, you write patterns of files/folders to ignore.
+*.log → ignores all .log files
+log/ → ignores the log folder
+Patterns are case-sensitive unless you configure Git otherwise.
+
+3. Hands-On Steps
+Step 1 — Create the .log file and log folder
+bash
+Copy
+Edit
+cd your-git-repo-folder
+echo "Test log entry" > debug.log
+mkdir log
+echo "Another log entry" > log/error.log
+
+Step 2 — Create/Edit the .gitignore file
+bash
+Copy
+Edit
+notepad++ .gitignore
+Add:
+
+bash
+Copy
+Edit
+*.log
+log/
+💡 Meaning:
+
+*.log → Ignore any file ending in .log anywhere in the repo
+
+log/ → Ignore the entire log directory
+
+Step 3 — Verify .gitignore effect
+bash
+Copy
+Edit
+git status
+Expected output:
+
+.log files and log/ directory will not appear as untracked.
+
+If they still appear, it means Git has already tracked them before.
+In that case, remove them from the index without deleting from disk:
+
+bash
+Copy
+Edit
+git rm --cached debug.log
+git rm --cached -r log
+Then check again:
+
+bash
+Copy
+Edit
+git status
+Step 4 — Commit changes
+bash
+Copy
+Edit
+git add .gitignore
+git commit -m "Add .gitignore to exclude .log files and log folder"
+git push origin main
+4. Verify
+Run:
+
+bash
+Copy
+Edit
+git status
+You should see no .log files or log folder in untracked changes.
+
+Check GitLab/GitHub repo — .log files should not be uploaded.
+
+✅ Outcome:
+You now have a .gitignore file that ignores:
+
+Any file ending in .log
+
+Any folder named log
+
+
